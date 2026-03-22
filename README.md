@@ -18,82 +18,11 @@
 
 ---
 
-## Evaluation Criteria Compliance 评审维度达标
-
-> 本项目严格按照 OKX AI Hackathon 评审标准设计，以下为四维度自评与证据：
-
-### 1. OKX Agent Trade Kit 结合度 ⭐⭐⭐⭐⭐
-
-| 集成项 | 状态 | 证据 |
-|---|---|---|
-| Agent Trade Kit MCP 协议接入 | ✅ | `mcp_bridge.py` + `mcp_proxy.js` stdio 通信 |
-| 119 个 MCP 工具全部可用 | ✅ | `tools/list` 返回 119 tools (7类) |
-| Market 模块 (13 tools) | ✅ | `market_get_ticker`, `market_get_funding_rate` 等 |
-| Swap 模块 (17 tools) | ✅ | `swap_place_order`, `swap_close_position`, `swap_set_leverage` |
-| Account 模块 (13 tools) | ✅ | `account_get_balance`, `account_get_positions` |
-| Spot 模块 (13 tools) | ✅ | `spot_place_order` 框架就绪 |
-| Grid 模块 (5 tools) | ✅ | `grid_create_order` 网格机器人部署 |
-| Option 模块 (14 tools) | ✅ | 工具可用，按需调用 |
-| Demo Trading 模式 | ✅ | `x-simulated-trading: 1` 真实下单 |
-| 真实 orderId 生成 | ✅ | 如 `3412480144057896960` |
-| OnchainOS DEX Aggregator | ✅ | 500+ DEX, 20+ Chains 聚合报价 |
-| OnchainOS AI Skills | ✅ | 11 个 Skills 已安装 (wallet, dex, security, x402...) |
-| OKX Earn API (Safe Mode) | ✅ | `POST /api/v5/finance/savings/purchase-redempt` |
-| 数据优先级: MCP → REST → Sim | ✅ | `onchain_os.py` 三级 fallback |
-
-### 2. 工具实用性 ⭐⭐⭐⭐⭐
-
-| 功能 | 状态 | 说明 |
-|---|---|---|
-| 遗传进化引擎完整闭环 | ✅ | 预测→执行→评估→选择→变异→下一代 |
-| 9 维策略基因模型 | ✅ | leverage, entry/exit, hedge, SL/TP, direction, chain, type |
-| 8 种市场体制自动检测 | ✅ | bull/bear volatile, trending, range, funding extreme |
-| OKX 真实 K 线回测 | ✅ | 滚动窗口避免数据复用 |
-| 适应度函数 (归一化) | ✅ | `0.5×PnL + 0.3×Funding×50 − 0.2×MaxDD` |
-| 参数面板实时调参 | ✅ | 种群大小/变异率/淘汰压力/代数 |
-| 策略导出 (JSON) | ✅ | 复制/下载完整基因参数 |
-| 投资模拟器 | ✅ | 输入本金→真实K线回测→资金曲线 |
-| 回测对比 | ✅ | 进化策略 vs 随机策略对比图 |
-| 蒙特卡洛统计验证 | ✅ | 30 trials × 多体制, t-test, p-value |
-| 一键部署到 OKX | ✅ | Deploy 按钮→MCP 真实下单 |
-| 安全模式→OKX Earn | ✅ | 连续3代下降自动切换稳健理财 |
-| 基因漂变可视化 | ✅ | 5维参数跨代演化曲线 |
-| 最优基因雷达图 | ✅ | 6维蛛网图展示最优策略 |
-| A2A 审计日志 | ✅ | JSONL 格式完整通信记录 |
-| 双模式切换 | ✅ | Simulation / OKX Demo Trading |
-| 策略类型可变异 | ✅ | funding_arb ↔ grid ↔ momentum ↔ mean_reversion |
-| K线去重 + 数据校验 | ✅ | 防止重复时间戳和缺失字段 |
-
-### 3. 创新性 ⭐⭐⭐⭐⭐
-
-| 创新点 | 说明 |
-|---|---|
-| **遗传进化 × DeFi 交易** | 首次将达尔文进化论完整映射到交易策略优化 |
-| **三智能体 A2A 闭环** | Predictor→Executor→Judge 自治协作，无需人工干预 |
-| **力导向图实时可视化** | SVG 物理模拟展示策略生态系统，大小/颜色=适应度 |
-| **基因漂变追踪** | 可视化展示自然选择如何改变种群参数分布 |
-| **MCP stdio Bridge** | 创新性地通过 Python→Node.js subprocess 桥接 MCP |
-| **蒙特卡洛多体制验证** | 多市场环境下统计证明进化产生超额收益 (Alpha) |
-| **安全模式仿生设计** | 模拟生物"休眠"机制，市场恶劣时自动避险 |
-| **9维基因染色体** | 完整的策略参数空间，支持突变/交叉/物种形成 |
-| **DEX+CEX 双轨进化** | 同时优化链上 DeFi 和中心化交易所策略 |
-
-### 4. 可复制性 ⭐⭐⭐⭐⭐
-
-| 项目 | 状态 | 说明 |
-|---|---|---|
-| Docker 一键部署 | ✅ | `docker-compose up --build` |
-| README 完整文档 | ✅ | 架构图 + 流程图 + 基因模型 + API 列表 |
-| `.env.example` 模板 | ✅ | 所有环境变量有说明 |
-| 无 API Key 可运行 | ✅ | Simulation 模式全功能 |
-| `package.json` 依赖管理 | ✅ | Node.js 依赖锁定 |
-| `requirements.txt` | ✅ | Python 依赖锁定 |
-| MCP 配置模板 | ✅ | `~/.okx/config.toml` 示例 |
-| OnchainOS Skills 预装 | ✅ | 11 Skills 在 `.agents/skills/` |
-| 项目进度表 | ✅ | `PROGRESS.md` 完整跟踪 |
-| GitHub 公开仓库 | ✅ | [Brian5216/GeneFi](https://github.com/Brian5216/GeneFi) |
-| Live Demo | ✅ | [GitHub Pages](https://brian5216.github.io/GeneFi/) |
-| 中英双语 UI | ✅ | 所有标签 "中文 English" 格式 |
+<div align="center">
+<img src="docs/images/architecture.png" alt="GeneFi System Architecture" width="700">
+<br>
+<em>System Architecture: 3 AI Agents + 119 MCP Tools + OnchainOS Ecosystem</em>
+</div>
 
 ---
 
