@@ -3,322 +3,452 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GeneFi - Gene + DeFi Evolution Engine</title>
+    <title>GeneFi - 基因金融 | Gene + DeFi Evolution Engine</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: 'Inter', -apple-system, sans-serif;
-            background: #0a0e17;
-            color: #e2e8f0;
-            min-height: 100vh;
+        :root {
+            --bg: #0a0e17; --bg2: #111827; --card: #1a2332; --border: #2a3a4e;
+            --text: #e2e8f0; --text2: #94a3b8; --muted: #64748b;
+            --green: #10b981; --red: #ef4444; --blue: #3b82f6;
+            --purple: #8b5cf6; --yellow: #f59e0b; --cyan: #06b6d4;
         }
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); }
+        a { color:var(--green); text-decoration:none; }
+        a:hover { text-decoration:underline; }
+
+        /* ─── Hero ─── */
         .hero {
-            text-align: center;
-            padding: 80px 20px 60px;
-            background: linear-gradient(180deg, #111827 0%, #0a0e17 100%);
+            text-align:center; padding:60px 20px 40px;
+            background:linear-gradient(180deg,#111827 0%,#0a0e17 100%);
+            border-bottom:1px solid var(--border);
         }
-        .hero h1 {
-            font-size: 56px;
-            font-weight: 800;
-            background: linear-gradient(135deg, #10b981, #06b6d4);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 8px;
-        }
-        .hero .subtitle {
-            font-size: 18px;
-            color: #94a3b8;
-            margin-bottom: 24px;
-        }
-        .hero .desc {
-            font-size: 15px;
-            color: #64748b;
-            max-width: 700px;
-            margin: 0 auto 32px;
-            line-height: 1.8;
-        }
-        .badges {
-            display: flex;
-            justify-content: center;
-            gap: 12px;
-            flex-wrap: wrap;
-            margin-bottom: 32px;
-        }
-        .badge {
-            padding: 6px 16px;
-            border-radius: 20px;
-            font-size: 13px;
-            font-weight: 700;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-        }
-        .badge.green { background: rgba(16,185,129,0.15); color: #10b981; border: 1px solid rgba(16,185,129,0.3); }
-        .badge.blue { background: rgba(59,130,246,0.15); color: #3b82f6; border: 1px solid rgba(59,130,246,0.3); }
-        .badge.purple { background: rgba(139,92,246,0.15); color: #8b5cf6; border: 1px solid rgba(139,92,246,0.3); }
-        .badge.yellow { background: rgba(245,158,11,0.15); color: #f59e0b; border: 1px solid rgba(245,158,11,0.3); }
-        .badge.cyan { background: rgba(6,182,212,0.15); color: #06b6d4; border: 1px solid rgba(6,182,212,0.3); }
-        .cta-row {
-            display: flex;
-            justify-content: center;
-            gap: 16px;
-            flex-wrap: wrap;
-        }
-        .btn {
-            padding: 14px 32px;
-            border-radius: 10px;
-            font-size: 15px;
-            font-weight: 700;
-            text-decoration: none;
-            transition: all 0.3s;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .btn-primary {
-            background: linear-gradient(135deg, #10b981, #059669);
-            color: white;
-        }
-        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(16,185,129,0.3); }
-        .btn-secondary {
-            background: #1a2332;
-            color: #e2e8f0;
-            border: 1px solid #2a3a4e;
-        }
-        .btn-secondary:hover { border-color: #10b981; }
+        .hero h1 { font-size:52px; font-weight:800; background:linear-gradient(135deg,var(--green),var(--cyan)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+        .hero .sub { font-size:16px; color:var(--text2); margin:8px 0 20px; }
+        .hero .desc { font-size:14px; color:var(--muted); max-width:680px; margin:0 auto 24px; line-height:1.8; }
+        .badges { display:flex; justify-content:center; gap:10px; flex-wrap:wrap; margin-bottom:28px; }
+        .badge { padding:5px 14px; border-radius:16px; font-size:12px; font-weight:700; }
+        .bg { background:rgba(16,185,129,.15); color:var(--green); border:1px solid rgba(16,185,129,.3); }
+        .bb { background:rgba(59,130,246,.15); color:var(--blue); border:1px solid rgba(59,130,246,.3); }
+        .bc { background:rgba(6,182,212,.15); color:var(--cyan); border:1px solid rgba(6,182,212,.3); }
+        .bp { background:rgba(139,92,246,.15); color:var(--purple); border:1px solid rgba(139,92,246,.3); }
+        .by { background:rgba(245,158,11,.15); color:var(--yellow); border:1px solid rgba(245,158,11,.3); }
+        .cta { display:flex; justify-content:center; gap:12px; flex-wrap:wrap; }
+        .btn { padding:12px 28px; border-radius:10px; font-size:14px; font-weight:700; display:inline-flex; align-items:center; gap:6px; transition:all .3s; }
+        .btn1 { background:linear-gradient(135deg,var(--green),#059669); color:#fff; }
+        .btn1:hover { transform:translateY(-2px); box-shadow:0 8px 20px rgba(16,185,129,.3); text-decoration:none; }
+        .btn2 { background:var(--card); color:var(--text); border:1px solid var(--border); }
+        .btn2:hover { border-color:var(--green); text-decoration:none; }
 
-        .section {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 60px 24px;
-        }
-        .section h2 {
-            font-size: 28px;
-            font-weight: 700;
-            margin-bottom: 32px;
-            text-align: center;
-            color: #10b981;
-        }
+        /* ─── Stats ─── */
+        .stats { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; max-width:900px; margin:40px auto; padding:0 20px; }
+        .stat { text-align:center; background:var(--card); border-radius:12px; padding:20px; border:1px solid var(--border); }
+        .stat .n { font-size:32px; font-weight:800; background:linear-gradient(135deg,var(--green),var(--cyan)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+        .stat .l { font-size:11px; color:var(--muted); margin-top:4px; }
 
-        .features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 16px;
-        }
-        .feature-card {
-            background: #1a2332;
-            border-radius: 14px;
-            padding: 24px;
-            border: 1px solid #2a3a4e;
-            transition: border-color 0.3s;
-        }
-        .feature-card:hover { border-color: #10b981; }
-        .feature-card .icon { font-size: 28px; margin-bottom: 12px; }
-        .feature-card h3 { font-size: 16px; font-weight: 700; margin-bottom: 8px; }
-        .feature-card p { font-size: 13px; color: #94a3b8; line-height: 1.6; }
+        /* ─── Section ─── */
+        .section { max-width:960px; margin:0 auto; padding:50px 20px; }
+        .section h2 { font-size:26px; font-weight:700; text-align:center; color:var(--green); margin-bottom:28px; }
 
-        .arch-box {
-            background: #111827;
-            border-radius: 14px;
-            padding: 32px;
-            border: 1px solid #2a3a4e;
-            overflow-x: auto;
+        /* ─── Dashboard Preview ─── */
+        .dashboard {
+            background:var(--bg2); border-radius:16px; border:1px solid var(--border);
+            overflow:hidden; box-shadow:0 24px 64px rgba(0,0,0,.4);
         }
-        .arch-box pre {
-            font-family: 'JetBrains Mono', 'Fira Code', monospace;
-            font-size: 12px;
-            color: #94a3b8;
-            line-height: 1.6;
-            white-space: pre;
+        .dash-header {
+            display:flex; align-items:center; justify-content:space-between;
+            padding:12px 20px; background:var(--bg2); border-bottom:1px solid var(--border);
+            flex-wrap:wrap; gap:8px;
         }
+        .dash-logo { font-size:18px; font-weight:800; color:var(--green); }
+        .dash-logo span { font-size:10px; color:var(--muted); display:block; font-weight:400; letter-spacing:1px; }
+        .pill { display:inline-flex; align-items:center; gap:4px; background:var(--card); padding:4px 10px; border-radius:14px; font-size:11px; }
+        .pill .pl { color:var(--muted); }
+        .pill .pv { font-weight:600; font-variant-numeric:tabular-nums; }
+        .dash-btns { display:flex; gap:6px; }
+        .db { padding:6px 12px; border-radius:6px; font-size:11px; font-weight:600; border:none; cursor:default; }
+        .db-g { background:linear-gradient(135deg,var(--green),#059669); color:#fff; }
+        .db-y { background:linear-gradient(135deg,var(--yellow),#d97706); color:#fff; }
+        .db-o { background:var(--card); color:var(--text); border:1px solid var(--border); }
+        .db-r { background:rgba(239,68,68,.15); color:var(--red); border:1px solid rgba(239,68,68,.3); }
 
-        .checklist {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 8px;
-        }
-        .check-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 14px;
-            padding: 8px 12px;
-            background: #111827;
-            border-radius: 8px;
-        }
-        .check-icon { color: #10b981; font-size: 16px; flex-shrink: 0; }
+        .dash-body { display:grid; grid-template-columns:320px 1fr 260px; min-height:420px; }
+        .dash-left { background:var(--bg2); padding:14px; border-right:1px solid var(--border); overflow:hidden; }
+        .dash-center { background:var(--bg); position:relative; display:flex; align-items:center; justify-content:center; }
+        .dash-right { background:var(--bg2); padding:14px; border-left:1px solid var(--border); overflow:hidden; }
 
-        .stats-row {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 16px;
-            margin-bottom: 40px;
-        }
-        .stat-card {
-            text-align: center;
-            background: #1a2332;
-            border-radius: 14px;
-            padding: 24px;
-            border: 1px solid #2a3a4e;
-        }
-        .stat-card .number {
-            font-size: 36px;
-            font-weight: 800;
-            background: linear-gradient(135deg, #10b981, #06b6d4);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .stat-card .label { font-size: 12px; color: #64748b; margin-top: 4px; }
+        .tab-nav { display:flex; gap:2px; background:var(--bg); border-radius:8px; padding:3px; margin-bottom:12px; }
+        .tab { flex:1; padding:6px 4px; border:none; border-radius:6px; background:transparent; color:var(--muted); font-size:10px; font-weight:600; cursor:pointer; text-align:center; }
+        .tab.active { background:var(--card); color:var(--green); }
+        .tab:hover { color:var(--text); }
 
-        .footer {
-            text-align: center;
-            padding: 40px 24px;
-            border-top: 1px solid #2a3a4e;
-            color: #64748b;
-            font-size: 13px;
-        }
+        .agent-card { background:var(--card); border-radius:10px; padding:12px; margin-bottom:8px; border-left:3px solid var(--blue); }
+        .agent-card.p { border-left-color:var(--cyan); }
+        .agent-card.e { border-left-color:var(--yellow); }
+        .agent-card.j { border-left-color:var(--purple); }
+        .agent-card.g { border-left-color:var(--green); }
+        .an { font-size:13px; font-weight:700; margin-bottom:2px; }
+        .ar { font-size:10px; color:var(--muted); margin-bottom:6px; }
+        .as { display:flex; justify-content:space-between; font-size:11px; padding:2px 0; }
+        .as .al { color:var(--text2); }
+        .as .av { font-weight:500; }
 
-        @media (max-width: 768px) {
-            .hero h1 { font-size: 36px; }
-            .stats-row { grid-template-columns: repeat(2, 1fr); }
-            .checklist { grid-template-columns: 1fr; }
+        .pt { font-size:10px; text-transform:uppercase; letter-spacing:1.5px; color:var(--muted); margin-bottom:8px; }
+
+        .mini { background:var(--card); border-radius:8px; padding:10px; margin-bottom:8px; }
+        .mini .mt { font-size:10px; color:var(--muted); text-transform:uppercase; letter-spacing:1px; margin-bottom:6px; }
+        .dist { display:flex; height:18px; border-radius:5px; overflow:hidden; }
+        .dist div { display:flex; align-items:center; justify-content:center; font-size:9px; font-weight:600; color:rgba(255,255,255,.8); }
+
+        /* Center viz placeholder */
+        .viz-placeholder {
+            width:90%; height:85%; border-radius:12px; position:relative;
+            background:radial-gradient(ellipse at center, rgba(16,185,129,.05) 0%, transparent 70%);
+        }
+        .node { position:absolute; border-radius:50%; opacity:.8; }
+        .node-label { position:absolute; font-size:8px; color:var(--muted); text-align:center; transform:translate(-50%,-50%); }
+
+        /* Bottom */
+        .dash-bottom { display:flex; border-top:1px solid var(--border); height:120px; }
+        .dash-timeline { flex:2; padding:10px 16px; }
+        .dash-log { flex:1; padding:10px 12px; border-left:1px solid var(--border); overflow:hidden; }
+        .log-entry { font-size:10px; font-family:'JetBrains Mono',monospace; padding:2px 0; display:flex; gap:6px; border-bottom:1px solid rgba(42,58,78,.3); }
+        .log-t { color:var(--muted); }
+        .log-a { font-weight:600; min-width:50px; }
+        .log-a.sys { color:var(--green); }
+        .log-a.pred { color:var(--cyan); }
+        .log-a.exec { color:var(--yellow); }
+        .log-a.jdg { color:var(--purple); }
+        .log-m { color:var(--text2); }
+
+        /* ─── Sections ─── */
+        .features { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+        .fc { background:var(--card); border-radius:12px; padding:20px; border:1px solid var(--border); transition:border-color .3s; }
+        .fc:hover { border-color:var(--green); }
+        .fc .fi { font-size:24px; margin-bottom:8px; }
+        .fc h3 { font-size:14px; font-weight:700; margin-bottom:6px; }
+        .fc p { font-size:12px; color:var(--text2); line-height:1.6; }
+
+        .checklist { display:grid; grid-template-columns:1fr 1fr; gap:6px; }
+        .ck { display:flex; align-items:center; gap:8px; font-size:13px; padding:8px 12px; background:var(--bg2); border-radius:8px; border:1px solid var(--border); }
+        .ck-i { color:var(--green); font-size:15px; flex-shrink:0; }
+
+        .arch { background:var(--bg2); border-radius:12px; padding:24px; border:1px solid var(--border); overflow-x:auto; }
+        .arch pre { font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--text2); line-height:1.6; }
+
+        .eval { margin-bottom:32px; }
+        .eval h3 { font-size:16px; font-weight:700; margin-bottom:12px; display:flex; align-items:center; gap:8px; }
+        .eval table { width:100%; border-collapse:collapse; font-size:12px; }
+        .eval th { text-align:left; padding:6px 10px; background:var(--card); color:var(--muted); font-size:11px; border-bottom:1px solid var(--border); }
+        .eval td { padding:6px 10px; border-bottom:1px solid rgba(42,58,78,.3); }
+        .eval td:first-child { color:var(--text2); }
+        .eval td:nth-child(2) { text-align:center; }
+
+        .footer { text-align:center; padding:40px 20px; border-top:1px solid var(--border); color:var(--muted); font-size:12px; }
+
+        @media(max-width:900px) {
+            .stats { grid-template-columns:repeat(2,1fr); }
+            .features { grid-template-columns:1fr; }
+            .checklist { grid-template-columns:1fr; }
+            .dash-body { grid-template-columns:1fr; }
+            .dash-right, .dash-left { display:none; }
         }
     </style>
 </head>
 <body>
 
-<!-- Hero -->
+<!-- ═══ Hero ═══ -->
 <div class="hero">
     <h1>GeneFi</h1>
-    <div class="subtitle">基因金融 · Gene + DeFi Evolution Engine</div>
-    <div class="desc">
-        GeneFi 将每套交易策略视为生物个体，通过遗传进化算法（变异、交叉、自然选择）让策略种群自动进化，持续适应市场变化。深度集成 OKX Agent Trade Kit 119 个 MCP 工具 + OnchainOS 500+ DEX 聚合。
-    </div>
+    <div class="sub">基因金融 · Gene + DeFi Evolution Engine</div>
+    <div class="desc">将每套交易策略视为生物个体，通过遗传进化算法（变异、交叉、自然选择）让策略种群自动进化，持续适应市场变化。<br>深度集成 OKX Agent Trade Kit 119 个 MCP 工具 + OnchainOS 500+ DEX 聚合 + 11 AI Skills。</div>
     <div class="badges">
-        <span class="badge green">OKX Agent Trade Kit</span>
-        <span class="badge blue">119 MCP Tools</span>
-        <span class="badge cyan">500+ DEX</span>
-        <span class="badge purple">11 AI Skills</span>
-        <span class="badge yellow">Demo Trading</span>
+        <span class="badge bg">OKX Agent Trade Kit</span>
+        <span class="badge bb">119 MCP Tools</span>
+        <span class="badge bc">500+ DEX</span>
+        <span class="badge bp">11 AI Skills</span>
+        <span class="badge by">Demo Trading</span>
     </div>
-    <div class="cta-row">
-        <a href="https://github.com/Brian5216/GeneFi" class="btn btn-primary">GitHub Repo</a>
-        <a href="https://www.okx.com/zh-hans/agent-tradekit" class="btn btn-secondary">OKX Agent Trade Kit</a>
+    <div class="cta">
+        <a href="https://github.com/Brian5216/GeneFi" class="btn btn1">GitHub Repo</a>
+        <a href="https://www.okx.com/zh-hans/agent-tradekit" class="btn btn2">OKX Agent Trade Kit</a>
     </div>
 </div>
 
-<!-- Stats -->
+<!-- ═══ Stats ═══ -->
+<div class="stats">
+    <div class="stat"><div class="n">119</div><div class="l">MCP Tools</div></div>
+    <div class="stat"><div class="n">500+</div><div class="l">DEX Sources</div></div>
+    <div class="stat"><div class="n">11</div><div class="l">AI Skills</div></div>
+    <div class="stat"><div class="n">3</div><div class="l">AI Agents</div></div>
+</div>
+
+<!-- ═══ Live Dashboard Preview ═══ -->
 <div class="section">
-    <div class="stats-row">
-        <div class="stat-card">
-            <div class="number">119</div>
-            <div class="label">MCP Tools</div>
+    <h2>Product Dashboard 产品界面</h2>
+    <div class="dashboard">
+        <!-- Header -->
+        <div class="dash-header">
+            <div>
+                <div class="dash-logo">GeneFi <span>GENE + DEFI EVOLUTION ENGINE</span></div>
+            </div>
+            <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+                <div class="pill"><span class="pl">世代 Gen</span><span class="pv">12</span></div>
+                <div class="pill"><span class="pl">种群 Pop</span><span class="pv">20</span></div>
+                <div class="pill"><span class="pl">最优 Best</span><span class="pv" style="color:var(--green)">0.0451</span></div>
+                <div class="pill"><span class="pl">均值 Avg</span><span class="pv">0.0128</span></div>
+                <div class="pill"><span class="pl">余额 Balance</span><span class="pv" style="color:var(--yellow)">$86,692</span></div>
+                <div class="pill"><span class="pl">收益 PnL</span><span class="pv" style="color:var(--red)">-13.3%</span></div>
+                <div class="pill"><span class="pl">体制 Regime</span><span class="pv" style="color:var(--red)">TRENDING DOWN</span></div>
+            </div>
+            <div class="dash-btns">
+                <span class="db db-g">&#9654; 启动 Start</span>
+                <span class="db db-o">&#9197; 单步 Step</span>
+                <span class="db db-r">&#9724; 停止 Stop</span>
+                <span class="db db-o">&#8634; 重置 Reset</span>
+                <span class="db db-y">&#9889; 部署 Deploy</span>
+                <span class="db db-o">&#8681; 导出 Export</span>
+                <span class="db db-o">&#9881; 设置</span>
+            </div>
         </div>
-        <div class="stat-card">
-            <div class="number">500+</div>
-            <div class="label">DEX Sources</div>
+        <!-- Body -->
+        <div class="dash-body">
+            <!-- Left Panel -->
+            <div class="dash-left">
+                <div class="tab-nav">
+                    <div class="tab active">智能体 Agents</div>
+                    <div class="tab">OKX 生态</div>
+                    <div class="tab">关于 About</div>
+                    <div class="tab">设置 Config</div>
+                </div>
+                <div class="agent-card p">
+                    <div class="an">预测者 Predictor</div>
+                    <div class="ar">种群孵化器 Population Incubator · Claude Opus</div>
+                    <div class="as"><span class="al">消息 Messages</span><span class="av">24</span></div>
+                    <div class="as"><span class="al">候选策略 Candidates</span><span class="av">240</span></div>
+                    <div class="as"><span class="al">状态 Status</span><span class="av" style="color:var(--cyan)">生成中 Generating</span></div>
+                </div>
+                <div class="agent-card e">
+                    <div class="an">执行者 Executor</div>
+                    <div class="ar">链上交易执行 OnchainOS Trader · MCP + Open API</div>
+                    <div class="as"><span class="al">消息 Messages</span><span class="av">24</span></div>
+                    <div class="as"><span class="al">交易数 Trades</span><span class="av">180</span></div>
+                    <div class="as"><span class="al">状态 Status</span><span class="av" style="color:var(--yellow)">执行中 Executing</span></div>
+                </div>
+                <div class="agent-card j">
+                    <div class="an">裁判者 Judge</div>
+                    <div class="ar">进化裁判 Evolution Arbiter · Claude Sonnet</div>
+                    <div class="as"><span class="al">消息 Messages</span><span class="av">24</span></div>
+                    <div class="as"><span class="al">已淘汰 Eliminated</span><span class="av">72</span></div>
+                    <div class="as"><span class="al">状态 Status</span><span class="av" style="color:var(--purple)">评估中 Evaluating</span></div>
+                </div>
+                <div class="agent-card g" style="margin-top:12px">
+                    <div class="an">Agent Trade Kit (MCP)</div>
+                    <div class="ar">119 Tools · MCP Protocol · Demo Trading</div>
+                    <div class="as"><span class="al">MCP 调用 Calls</span><span class="av">87</span></div>
+                    <div class="as"><span class="al">工具使用 Tools Used</span><span class="av">6</span></div>
+                    <div class="as"><span class="al">数据来源 Source</span><span class="av"><span style="background:rgba(16,185,129,.2);color:var(--green);padding:1px 6px;border-radius:6px;font-size:9px;font-weight:700">MCP AGENT TRADE KIT</span></span></div>
+                </div>
+            </div>
+            <!-- Center: Viz -->
+            <div class="dash-center">
+                <div class="viz-placeholder" id="viz">
+                    <!-- Simulated nodes will be drawn by JS -->
+                </div>
+            </div>
+            <!-- Right Panel -->
+            <div class="dash-right">
+                <div class="pt">种群基因 POPULATION DNA</div>
+                <div class="mini">
+                    <div class="mt">方向分布 DIRECTION</div>
+                    <div class="dist">
+                        <div style="width:45%;background:var(--green)">多 Long</div>
+                        <div style="width:25%;background:var(--red)">空 Short</div>
+                        <div style="width:30%;background:var(--blue)">中 Neutral</div>
+                    </div>
+                </div>
+                <div class="mini">
+                    <div class="mt">策略类型 STRATEGY TYPE</div>
+                    <div class="dist">
+                        <div style="width:20%;background:var(--purple)">Arb</div>
+                        <div style="width:30%;background:var(--yellow)">Grid</div>
+                        <div style="width:30%;background:var(--cyan)">Mom</div>
+                        <div style="width:20%;background:var(--blue)">MR</div>
+                    </div>
+                </div>
+                <div class="mini">
+                    <div class="mt">平均杠杆 AVG LEVERAGE</div>
+                    <div style="font-size:22px;font-weight:700;color:var(--yellow)">5.2x</div>
+                </div>
+                <div class="mini">
+                    <div class="mt">平均对冲 AVG HEDGE</div>
+                    <div style="font-size:22px;font-weight:700;color:var(--cyan)">42%</div>
+                </div>
+                <div class="mini">
+                    <div class="mt">排行榜 LEADERBOARD</div>
+                    <div style="font-size:10px;font-family:'JetBrains Mono',monospace">
+                        <div style="display:flex;justify-content:space-between;padding:2px 0;border-bottom:1px solid rgba(42,58,78,.3)"><span style="color:var(--green)">#1 a3f8c2</span><span>momentum/long</span><span style="color:var(--green);font-weight:700">0.0451</span></div>
+                        <div style="display:flex;justify-content:space-between;padding:2px 0;border-bottom:1px solid rgba(42,58,78,.3)"><span style="color:var(--green)">#2 7b2e91</span><span>grid/neutral</span><span style="color:var(--green);font-weight:700">0.0389</span></div>
+                        <div style="display:flex;justify-content:space-between;padding:2px 0;border-bottom:1px solid rgba(42,58,78,.3)"><span style="color:var(--green)">#3 e5d1f4</span><span>funding_arb/long</span><span style="color:var(--green);font-weight:700">0.0312</span></div>
+                        <div style="display:flex;justify-content:space-between;padding:2px 0"><span style="color:var(--yellow)">#4 1c9a0b</span><span>mean_rev/short</span><span style="color:var(--yellow);font-weight:700">0.0187</span></div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="stat-card">
-            <div class="number">11</div>
-            <div class="label">AI Skills</div>
-        </div>
-        <div class="stat-card">
-            <div class="number">3</div>
-            <div class="label">AI Agents</div>
+        <!-- Bottom -->
+        <div class="dash-bottom">
+            <div class="dash-timeline">
+                <div class="pt">适应度时间线 FITNESS TIMELINE</div>
+                <canvas id="timeline-canvas" style="width:100%;height:80px"></canvas>
+            </div>
+            <div class="dash-log">
+                <div class="pt">A2A 消息日志 LOG</div>
+                <div class="log-entry"><span class="log-t">10:23:45</span><span class="log-a jdg">裁判 judge</span><span class="log-m">Gen 12: 淘汰 6 个策略</span></div>
+                <div class="log-entry"><span class="log-t">10:23:44</span><span class="log-a exec">执行 executor</span><span class="log-m">K线回测完成 20 strategies</span></div>
+                <div class="log-entry"><span class="log-t">10:23:42</span><span class="log-a pred">预测 predictor</span><span class="log-m">市场体制: trending_down</span></div>
+                <div class="log-entry"><span class="log-t">10:23:41</span><span class="log-a sys">系统 system</span><span class="log-m">MCP market_get_ticker OK</span></div>
+                <div class="log-entry"><span class="log-t">10:23:40</span><span class="log-a sys">系统 system</span><span class="log-m">第 12 代进化启动</span></div>
+            </div>
         </div>
     </div>
+</div>
 
-    <h2>Core Features</h2>
+<!-- ═══ Features ═══ -->
+<div class="section">
+    <h2>Core Features 核心功能</h2>
     <div class="features">
-        <div class="feature-card">
-            <div class="icon">&#127981;</div>
-            <h3>自适应进化 Adaptive Evolution</h3>
-            <p>8种市场体制自动检测，策略参数通过遗传算法实时进化，持续适应市场变化。</p>
-        </div>
-        <div class="feature-card">
-            <div class="icon">&#129302;</div>
-            <h3>多智能体 A2A 协议</h3>
-            <p>3个AI Agent自治协作：Predictor预测市场→Executor执行策略→Judge裁判适应度。</p>
-        </div>
-        <div class="feature-card">
-            <div class="icon">&#128279;</div>
-            <h3>OKX Agent Trade Kit (MCP)</h3>
-            <p>通过MCP协议接入119个OKX交易工具，支持合约/现货/期权/网格/算法单。</p>
-        </div>
-        <div class="feature-card">
-            <div class="icon">&#128202;</div>
-            <h3>蒙特卡洛统计验证</h3>
-            <p>多体制回测+t检验，科学证明进化策略产生超额收益(Alpha)。</p>
-        </div>
-        <div class="feature-card">
-            <div class="icon">&#128737;</div>
-            <h3>安全模式 Safe Mode</h3>
-            <p>种群适应度连续下降自动切换OKX Earn稳健理财，仿生"休眠"避险。</p>
-        </div>
-        <div class="feature-card">
-            <div class="icon">&#128640;</div>
-            <h3>一键部署 Deploy</h3>
-            <p>进化最优策略一键通过MCP部署到OKX Demo Trading，获得真实orderId。</p>
-        </div>
+        <div class="fc"><div class="fi">&#127981;</div><h3>自适应进化 Adaptive</h3><p>8种市场体制自动检测，9维策略基因通过遗传算法实时进化，持续适应市场。</p></div>
+        <div class="fc"><div class="fi">&#129302;</div><h3>多智能体 Multi-Agent</h3><p>3个AI Agent通过A2A协议自治协作：Predictor→Executor→Judge 闭环。</p></div>
+        <div class="fc"><div class="fi">&#128279;</div><h3>Agent Trade Kit (MCP)</h3><p>通过MCP协议接入OKX 119个交易工具，合约/现货/期权/网格全覆盖。</p></div>
+        <div class="fc"><div class="fi">&#128202;</div><h3>蒙特卡洛验证 Monte Carlo</h3><p>30 trials × 多体制统计检验，t-test证明进化产生Alpha超额收益。</p></div>
+        <div class="fc"><div class="fi">&#128737;</div><h3>安全模式 Safe Mode</h3><p>种群适应度连续下降自动切换OKX Earn稳健理财，仿生"休眠"避险。</p></div>
+        <div class="fc"><div class="fi">&#128640;</div><h3>一键部署 Deploy</h3><p>进化最优策略一键通过MCP部署到OKX Demo Trading，获真实orderId。</p></div>
+        <div class="fc"><div class="fi">&#128176;</div><h3>投资模拟器 Simulator</h3><p>输入本金→真实OKX K线回测→资金曲线→进化vs随机对比。</p></div>
+        <div class="fc"><div class="fi">&#127760;</div><h3>500+ DEX 聚合</h3><p>OnchainOS DEX Aggregator，20+链最优路由，智能订单拆分。</p></div>
+        <div class="fc"><div class="fi">&#128209;</div><h3>策略导出 Export</h3><p>将进化最优策略导出为JSON配置，含完整9维基因参数。</p></div>
     </div>
 </div>
 
-<!-- Architecture -->
+<!-- ═══ Checklist ═══ -->
 <div class="section">
-    <h2>System Architecture</h2>
-    <div class="arch-box">
-        <pre>
-┌─────────────────────────────────────────────────────────┐
-│                  GeneFi Evolution Engine                  │
-│                                                         │
-│  ┌───────────┐  A2A  ┌───────────┐  A2A  ┌───────────┐ │
-│  │ Predictor  │─────>│ Executor   │─────>│   Judge    │ │
-│  │ Claude Opus│<─────│ OnchainOS  │<─────│Claude Sonn.│ │
-│  └─────┬─────┘      └─────┬─────┘      └─────┬─────┘ │
-│        └───────────────────┼──────────────────┘       │
-│                            ▼                           │
-│  ┌─────────────────────────────────────────────────┐   │
-│  │        OKX Agent Trade Kit (MCP - 119 Tools)     │   │
-│  │  Market(13) Swap(17) Account(13) Spot(13)        │   │
-│  │  Option(14) Grid(5) Trade(1) System(1)           │   │
-│  └─────────────────────────────────────────────────┘   │
-│                            ▼                           │
-│  ┌─────────────────────────────────────────────────┐   │
-│  │  OnchainOS: 500+ DEX │ 11 Skills │ OKX Earn     │   │
-│  └─────────────────────────────────────────────────┘   │
-└─────────────────────────────────────────────────────────┘
-        </pre>
-    </div>
-</div>
-
-<!-- Checklist -->
-<div class="section">
-    <h2>Implementation Checklist</h2>
+    <h2>Implementation Checklist 功能清单</h2>
     <div class="checklist">
-        <div class="check-item"><span class="check-icon">&#9989;</span> Agent Trade Kit MCP 119 tools</div>
-        <div class="check-item"><span class="check-icon">&#9989;</span> Demo Trading real orders</div>
-        <div class="check-item"><span class="check-icon">&#9989;</span> OnchainOS 500+ DEX aggregation</div>
-        <div class="check-item"><span class="check-icon">&#9989;</span> 11 OnchainOS AI Skills</div>
-        <div class="check-item"><span class="check-icon">&#9989;</span> 9-gene strategy chromosome</div>
-        <div class="check-item"><span class="check-icon">&#9989;</span> 8 market regime detection</div>
-        <div class="check-item"><span class="check-icon">&#9989;</span> Monte Carlo validation</div>
-        <div class="check-item"><span class="check-icon">&#9989;</span> OKX Earn safe mode</div>
-        <div class="check-item"><span class="check-icon">&#9989;</span> Investment simulator</div>
-        <div class="check-item"><span class="check-icon">&#9989;</span> One-click deploy to OKX</div>
-        <div class="check-item"><span class="check-icon">&#9989;</span> Gene drift visualization</div>
-        <div class="check-item"><span class="check-icon">&#9989;</span> Force-directed graph viz</div>
-        <div class="check-item"><span class="check-icon">&#9989;</span> Strategy export (JSON)</div>
-        <div class="check-item"><span class="check-icon">&#9989;</span> A2A audit logging</div>
-        <div class="check-item"><span class="check-icon">&#9989;</span> Docker one-click deploy</div>
-        <div class="check-item"><span class="check-icon">&#9989;</span> Bilingual UI (中/EN)</div>
+        <div class="ck"><span class="ck-i">&#9989;</span> Agent Trade Kit MCP 119 tools 接入</div>
+        <div class="ck"><span class="ck-i">&#9989;</span> Demo Trading 真实下单 (orderId)</div>
+        <div class="ck"><span class="ck-i">&#9989;</span> OnchainOS 500+ DEX 聚合报价</div>
+        <div class="ck"><span class="ck-i">&#9989;</span> 11 OnchainOS AI Skills 安装</div>
+        <div class="ck"><span class="ck-i">&#9989;</span> 9 维策略基因染色体模型</div>
+        <div class="ck"><span class="ck-i">&#9989;</span> 8 种市场体制自动检测</div>
+        <div class="ck"><span class="ck-i">&#9989;</span> 蒙特卡洛多体制统计验证</div>
+        <div class="ck"><span class="ck-i">&#9989;</span> OKX Earn 安全模式自动切换</div>
+        <div class="ck"><span class="ck-i">&#9989;</span> 投资模拟器 + 资金曲线</div>
+        <div class="ck"><span class="ck-i">&#9989;</span> 一键部署最优策略到 OKX</div>
+        <div class="ck"><span class="ck-i">&#9989;</span> 基因漂变可视化 (5维)</div>
+        <div class="ck"><span class="ck-i">&#9989;</span> 力导向图实时进化可视化</div>
+        <div class="ck"><span class="ck-i">&#9989;</span> 策略导出 JSON 配置</div>
+        <div class="ck"><span class="ck-i">&#9989;</span> A2A 协议审计日志 (JSONL)</div>
+        <div class="ck"><span class="ck-i">&#9989;</span> Docker 一键部署</div>
+        <div class="ck"><span class="ck-i">&#9989;</span> 中英双语 UI</div>
+        <div class="ck"><span class="ck-i">&#9989;</span> 回测对比 (进化 vs 随机)</div>
+        <div class="ck"><span class="ck-i">&#9989;</span> MCP 优先→REST 回退→模拟兜底</div>
     </div>
 </div>
 
-<!-- Footer -->
-<div class="footer">
-    Built for OKX AI Hackathon Season 2 | Powered by Claude + OKX Agent Trade Kit<br>
-    <a href="https://github.com/Brian5216/GeneFi" style="color:#10b981;text-decoration:none">github.com/Brian5216/GeneFi</a>
+<!-- ═══ Architecture ═══ -->
+<div class="section">
+    <h2>System Architecture 系统架构</h2>
+    <div class="arch"><pre>
+┌─────────────────────────────────────────────────────────────────┐
+│                    GeneFi Evolution Engine                       │
+│                                                                 │
+│   ┌─────────────┐   A2A    ┌─────────────┐   A2A    ┌─────────────┐
+│   │  Predictor   │────────>│  Executor    │────────>│    Judge     │
+│   │  预测者       │<────────│  执行者       │<────────│    裁判者     │
+│   │  Claude Opus │         │  OnchainOS   │         │ Claude Sonnet│
+│   └──────┬──────┘         └──────┬──────┘         └──────┬──────┘
+│          │                       │                        │
+│          └───────────────────────┼────────────────────────┘
+│                                  ▼
+│   ┌─────────────────────────────────────────────────────────┐
+│   │             OKX Agent Trade Kit (MCP Protocol)           │
+│   │  Market(13) Swap(17) Account(13) Spot(13) Option(14)     │
+│   │  Grid(5) Trade(1) System(1) = 119 Tools                  │
+│   └─────────────────────────────────────────────────────────┘
+│                                  ▼
+│   ┌─────────────────────────────────────────────────────────┐
+│   │  OnchainOS: 500+ DEX Aggregator │ 11 AI Skills │ Earn   │
+│   └─────────────────────────────────────────────────────────┘
+└─────────────────────────────────────────────────────────────────┘
+
+Data Priority: MCP Agent Trade Kit → REST API → Simulation
+    </pre></div>
 </div>
 
+<!-- ═══ Footer ═══ -->
+<div class="footer">
+    Built for <strong>OKX AI Hackathon Season 2</strong> | Powered by Claude + OKX Agent Trade Kit<br><br>
+    <a href="https://github.com/Brian5216/GeneFi">github.com/Brian5216/GeneFi</a>
+</div>
+
+<!-- ═══ Canvas Animation ═══ -->
+<script>
+// Draw simulated evolution nodes
+const viz = document.getElementById('viz');
+const colors = ['#10b981','#10b981','#f59e0b','#3b82f6','#8b5cf6','#ef4444','#06b6d4'];
+for (let i = 0; i < 25; i++) {
+    const node = document.createElement('div');
+    node.className = 'node';
+    const size = 8 + Math.random() * 20;
+    const x = 10 + Math.random() * 80;
+    const y = 10 + Math.random() * 80;
+    const color = colors[Math.floor(Math.random() * colors.length)];
+    node.style.cssText = `width:${size}px;height:${size}px;left:${x}%;top:${y}%;background:${color};box-shadow:0 0 ${size/2}px ${color}40;`;
+    viz.appendChild(node);
+    // Label
+    const types = ['F','G','M','R'];
+    const label = document.createElement('div');
+    label.className = 'node-label';
+    label.textContent = types[Math.floor(Math.random()*4)];
+    label.style.cssText = `left:${x}%;top:${y}%;`;
+    viz.appendChild(label);
+}
+
+// Draw timeline
+const canvas = document.getElementById('timeline-canvas');
+if (canvas) {
+    canvas.width = canvas.offsetWidth * 2;
+    canvas.height = 160;
+    const ctx = canvas.getContext('2d');
+    const w = canvas.width, h = canvas.height;
+    // Generate fake fitness data
+    const best = [], avg = [], worst = [];
+    let b = 0.01, a = -0.005, wr = -0.02;
+    for (let i = 0; i < 12; i++) {
+        b += (Math.random() - 0.3) * 0.008;
+        a += (Math.random() - 0.4) * 0.005;
+        wr += (Math.random() - 0.4) * 0.006;
+        best.push(b); avg.push(a); worst.push(wr);
+    }
+    const all = [...best,...avg,...worst];
+    const minY = Math.min(...all) - 0.005, maxY = Math.max(...all) + 0.005;
+    const range = maxY - minY || 0.01;
+    const pad = {t:10,r:10,b:20,l:40};
+    const pw = w-pad.l-pad.r, ph = h-pad.t-pad.b;
+    const xS = i => pad.l + (i/11)*pw;
+    const yS = v => pad.t + ph - ((v-minY)/range)*ph;
+    // Grid
+    ctx.strokeStyle = '#2a3a4e'; ctx.lineWidth = 0.5;
+    for(let i=0;i<4;i++){const y=pad.t+(ph/3)*i;ctx.beginPath();ctx.moveTo(pad.l,y);ctx.lineTo(w-pad.r,y);ctx.stroke();}
+    // Lines
+    [[best,'#10b981',2],[avg,'#3b82f6',1.5],[worst,'#ef4444',1]].forEach(([d,c,lw])=>{
+        ctx.strokeStyle=c;ctx.lineWidth=lw;ctx.beginPath();
+        d.forEach((v,i)=>{const x=xS(i),y=yS(v);i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);});
+        ctx.stroke();
+    });
+    ctx.fillStyle='#64748b';ctx.font='18px JetBrains Mono';
+    ctx.fillText('Gen 0',pad.l,h-2);ctx.fillText('Gen 11',w-pad.r-60,h-2);
+}
+</script>
 </body>
 </html>
