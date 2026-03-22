@@ -1,0 +1,26 @@
+services:
+  # Python Backend
+  - type: web
+    name: genefi-backend
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: python3 -m uvicorn main:app --host 0.0.0.0 --port $PORT --loop asyncio --http h11 --ws websockets
+    envVars:
+      - key: DEMO_MODE
+        value: "true"
+      - key: EXECUTION_MODE
+        value: "simulation"
+    plan: free
+
+  # Node.js Proxy (serves static + proxies API/WS)
+  - type: web
+    name: genefi
+    runtime: node
+    buildCommand: npm install
+    startCommand: node serve.js
+    envVars:
+      - key: BACKEND_URL
+        value: "https://genefi-backend.onrender.com"
+      - key: PORT
+        value: "8000"
+    plan: free
