@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500">
+  <defs>
+    <linearGradient id="grd" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#10b981"/><stop offset="100%" stop-color="#06b6d4"/></linearGradient>
+    <filter id="shadow"><feDropShadow dx="2" dy="2" stdDeviation="3" flood-opacity="0.15"/></filter>
+  </defs>
+  <rect width="800" height="500" rx="16" fill="#0f172a"/>
+  <text x="400" y="36" text-anchor="middle" fill="#10b981" font-family="Arial" font-size="18" font-weight="bold">GeneFi System Architecture</text>
+
+  <!-- Agents -->
+  <rect x="60" y="70" width="180" height="100" rx="12" fill="#164e63" stroke="#06b6d4" stroke-width="2" filter="url(#shadow)"/>
+  <text x="150" y="100" text-anchor="middle" fill="#06b6d4" font-family="Arial" font-size="14" font-weight="bold">Predictor</text>
+  <text x="150" y="120" text-anchor="middle" fill="#94a3b8" font-family="Arial" font-size="11">预测者 · Claude Opus</text>
+  <text x="150" y="140" text-anchor="middle" fill="#64748b" font-family="Arial" font-size="10">Market Regime Detection</text>
+  <text x="150" y="155" text-anchor="middle" fill="#64748b" font-family="Arial" font-size="10">Population Generation</text>
+
+  <rect x="310" y="70" width="180" height="100" rx="12" fill="#451a03" stroke="#f59e0b" stroke-width="2" filter="url(#shadow)"/>
+  <text x="400" y="100" text-anchor="middle" fill="#f59e0b" font-family="Arial" font-size="14" font-weight="bold">Executor</text>
+  <text x="400" y="120" text-anchor="middle" fill="#94a3b8" font-family="Arial" font-size="11">执行者 · OnchainOS</text>
+  <text x="400" y="140" text-anchor="middle" fill="#64748b" font-family="Arial" font-size="10">K-line Backtest + MCP</text>
+  <text x="400" y="155" text-anchor="middle" fill="#64748b" font-family="Arial" font-size="10">Real Order Execution</text>
+
+  <rect x="560" y="70" width="180" height="100" rx="12" fill="#2e1065" stroke="#8b5cf6" stroke-width="2" filter="url(#shadow)"/>
+  <text x="650" y="100" text-anchor="middle" fill="#8b5cf6" font-family="Arial" font-size="14" font-weight="bold">Judge</text>
+  <text x="650" y="120" text-anchor="middle" fill="#94a3b8" font-family="Arial" font-size="11">裁判者 · Claude Sonnet</text>
+  <text x="650" y="140" text-anchor="middle" fill="#64748b" font-family="Arial" font-size="10">Fitness Scoring</text>
+  <text x="650" y="155" text-anchor="middle" fill="#64748b" font-family="Arial" font-size="10">Selection + Safe Mode</text>
+
+  <!-- A2A Arrows -->
+  <line x1="240" y1="110" x2="310" y2="110" stroke="#10b981" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="490" y1="110" x2="560" y2="110" stroke="#10b981" stroke-width="2"/>
+  <text x="275" y="100" text-anchor="middle" fill="#10b981" font-family="Arial" font-size="9">A2A</text>
+  <text x="525" y="100" text-anchor="middle" fill="#10b981" font-family="Arial" font-size="9">A2A</text>
+  <path d="M650 170 L650 190 L400 190 L400 200" stroke="#10b981" stroke-width="1.5" fill="none" stroke-dasharray="4,4"/>
+  <path d="M150 170 L150 190 L400 190" stroke="#10b981" stroke-width="1.5" fill="none" stroke-dasharray="4,4"/>
+
+  <!-- MCP Box -->
+  <rect x="80" y="210" width="640" height="120" rx="12" fill="#052e16" stroke="#10b981" stroke-width="2" filter="url(#shadow)"/>
+  <text x="400" y="238" text-anchor="middle" fill="#10b981" font-family="Arial" font-size="15" font-weight="bold">OKX Agent Trade Kit (MCP Protocol)</text>
+  <text x="400" y="258" text-anchor="middle" fill="#6ee7b7" font-family="Arial" font-size="11">119 Tools via stdio · Demo Trading · --modules all</text>
+
+  <!-- MCP modules -->
+  <rect x="100" y="270" width="90" height="44" rx="6" fill="#10b981" opacity="0.2"/>
+  <text x="145" y="290" text-anchor="middle" fill="#6ee7b7" font-family="Arial" font-size="10" font-weight="bold">Market</text>
+  <text x="145" y="304" text-anchor="middle" fill="#86efac" font-family="Arial" font-size="9">13 tools</text>
+
+  <rect x="200" y="270" width="90" height="44" rx="6" fill="#10b981" opacity="0.2"/>
+  <text x="245" y="290" text-anchor="middle" fill="#6ee7b7" font-family="Arial" font-size="10" font-weight="bold">Swap</text>
+  <text x="245" y="304" text-anchor="middle" fill="#86efac" font-family="Arial" font-size="9">17 tools</text>
+
+  <rect x="300" y="270" width="90" height="44" rx="6" fill="#10b981" opacity="0.2"/>
+  <text x="345" y="290" text-anchor="middle" fill="#6ee7b7" font-family="Arial" font-size="10" font-weight="bold">Account</text>
+  <text x="345" y="304" text-anchor="middle" fill="#86efac" font-family="Arial" font-size="9">13 tools</text>
+
+  <rect x="400" y="270" width="90" height="44" rx="6" fill="#10b981" opacity="0.2"/>
+  <text x="445" y="290" text-anchor="middle" fill="#6ee7b7" font-family="Arial" font-size="10" font-weight="bold">Spot</text>
+  <text x="445" y="304" text-anchor="middle" fill="#86efac" font-family="Arial" font-size="9">13 tools</text>
+
+  <rect x="500" y="270" width="90" height="44" rx="6" fill="#10b981" opacity="0.2"/>
+  <text x="545" y="290" text-anchor="middle" fill="#6ee7b7" font-family="Arial" font-size="10" font-weight="bold">Grid</text>
+  <text x="545" y="304" text-anchor="middle" fill="#86efac" font-family="Arial" font-size="9">5 tools</text>
+
+  <rect x="600" y="270" width="90" height="44" rx="6" fill="#10b981" opacity="0.2"/>
+  <text x="645" y="290" text-anchor="middle" fill="#6ee7b7" font-family="Arial" font-size="10" font-weight="bold">Option</text>
+  <text x="645" y="304" text-anchor="middle" fill="#86efac" font-family="Arial" font-size="9">14 tools</text>
+
+  <!-- Arrow down -->
+  <line x1="400" y1="330" x2="400" y2="355" stroke="#06b6d4" stroke-width="2"/>
+
+  <!-- OnchainOS Box -->
+  <rect x="80" y="360" width="640" height="110" rx="12" fill="#082f49" stroke="#06b6d4" stroke-width="2" filter="url(#shadow)"/>
+  <text x="400" y="388" text-anchor="middle" fill="#06b6d4" font-family="Arial" font-size="15" font-weight="bold">OnchainOS Ecosystem</text>
+
+  <rect x="100" y="400" width="190" height="50" rx="8" fill="#06b6d4" opacity="0.15"/>
+  <text x="195" y="422" text-anchor="middle" fill="#67e8f9" font-family="Arial" font-size="11" font-weight="bold">DEX Aggregator</text>
+  <text x="195" y="438" text-anchor="middle" fill="#a5f3fc" font-family="Arial" font-size="9">500+ DEX · 20+ Chains</text>
+
+  <rect x="305" y="400" width="190" height="50" rx="8" fill="#06b6d4" opacity="0.15"/>
+  <text x="400" y="422" text-anchor="middle" fill="#67e8f9" font-family="Arial" font-size="11" font-weight="bold">11 AI Skills</text>
+  <text x="400" y="438" text-anchor="middle" fill="#a5f3fc" font-family="Arial" font-size="9">Wallet · Security · x402</text>
+
+  <rect x="510" y="400" width="190" height="50" rx="8" fill="#06b6d4" opacity="0.15"/>
+  <text x="605" y="422" text-anchor="middle" fill="#67e8f9" font-family="Arial" font-size="11" font-weight="bold">OKX Earn</text>
+  <text x="605" y="438" text-anchor="middle" fill="#a5f3fc" font-family="Arial" font-size="9">Safe Mode Auto-Switch</text>
+
+  <!-- Priority label -->
+  <text x="400" y="490" text-anchor="middle" fill="#475569" font-family="Arial" font-size="11">Data Priority: MCP Agent Trade Kit → REST API → Simulation</text>
+</svg>
