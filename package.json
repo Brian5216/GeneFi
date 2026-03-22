@@ -1,0 +1,17 @@
+{
+  "name": "genefi-proxy",
+  "version": "1.0.0",
+  "description": "GeneFi - Gene + DeFi Evolution Engine - Node.js WS/API proxy",
+  "main": "serve.js",
+  "scripts": {
+    "start": "node serve.js",
+    "dev": "node serve.js"
+  },
+  "dependencies": {
+    "ws": "^8.19.0"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "license": "MIT"
+}

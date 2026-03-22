@@ -1,0 +1,30 @@
+version: "3.8"
+
+services:
+  backend:
+    build:
+      context: .
+      target: backend
+    ports:
+      - "8001:8001"
+    environment:
+      - DEMO_MODE=true
+      - EVOLUTION_POPULATION_SIZE=20
+      - EVOLUTION_GENERATIONS=15
+      - MUTATION_RATE=0.15
+    volumes:
+      - ./logs:/app/logs
+    restart: unless-stopped
+
+  proxy:
+    build:
+      context: .
+      target: proxy
+    ports:
+      - "8000:8000"
+    depends_on:
+      - backend
+    environment:
+      - BACKEND_HOST=backend
+      - BACKEND_PORT=8001
+    restart: unless-stopped

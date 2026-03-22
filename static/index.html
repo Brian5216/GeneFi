@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GeneFi - 基因金融 | Gene + DeFi Evolution Engine</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app" id="app">
+        <!-- ═══ Header ═══ -->
+        <header class="header">
+            <div class="header-left">
+                <div>
+                    <div class="logo">GeneFi</div>
+                    <div class="logo-sub">基因金融 Gene + DeFi Evolution Engine</div>
+                </div>
+                <span class="connection-dot disconnected" id="conn-dot" title="WebSocket 连接状态"></span>
+            </div>
+            <div class="header-center">
+                <div class="stat-pill"><span class="label">世代 Gen</span><span class="value" id="stat-gen">0</span></div>
+                <div class="stat-pill"><span class="label">种群 Pop</span><span class="value" id="stat-pop">0</span></div>
+                <div class="stat-pill"><span class="label">最优 Best</span><span class="value positive" id="stat-best">0.00</span></div>
+                <div class="stat-pill"><span class="label">均值 Avg</span><span class="value" id="stat-avg">0.00</span></div>
+                <div class="stat-pill"><span class="label">余额 Balance</span><span class="value" id="stat-balance" style="color:var(--accent-yellow)">$100,000</span></div>
+                <div class="stat-pill"><span class="label">收益 PnL</span><span class="value" id="stat-pnl">0.00%</span></div>
+                <div class="stat-pill"><span class="label">体制 Regime</span><span class="regime-badge normal" id="stat-regime">--</span></div>
+            </div>
+            <div class="header-right">
+                <button class="btn btn-primary" id="btn-start" onclick="startEvolution()">&#9654; 启动 Start</button>
+                <button class="btn btn-secondary" id="btn-step" onclick="stepEvolution()">&#9197; 单步 Step</button>
+                <button class="btn btn-danger" id="btn-stop" onclick="stopEvolution()" disabled>&#9724; 停止 Stop</button>
+                <button class="btn btn-secondary" id="btn-reset" onclick="resetEvolution()">&#8634; 重置 Reset</button>
+                <button class="btn btn-primary" id="btn-deploy" onclick="deployBestStrategy()" style="background:linear-gradient(135deg,var(--accent-yellow),#d97706)">&#9889; 部署 Deploy</button>
+                <button class="btn btn-secondary" id="btn-export" onclick="exportStrategies()">&#8681; 导出 Export</button>
+                <button class="btn btn-secondary" id="btn-settings" onclick="toggleSettings()">&#9881; 设置</button>
+            </div>
+        </header>
+
+        <!-- ═══ Left Panel: Tabbed ═══ -->
+        <div class="panel-left">
+            <!-- Tab Navigation -->
+            <div class="tab-nav">
+                <button class="tab-btn active" onclick="switchTab('tab-agents')">智能体 Agents</button>
+                <button class="tab-btn" onclick="switchTab('tab-okx')">OKX 生态</button>
+                <button class="tab-btn" onclick="switchTab('tab-about')">关于 About</button>
+                <button class="tab-btn" onclick="switchTab('tab-config')">设置 Config</button>
+            </div>
+
+            <!-- Tab: Agents -->
+            <div class="tab-content active" id="tab-agents">
+                <div class="agent-card predictor">
+                    <div class="agent-name">预测者 Predictor</div>
+                    <div class="agent-role">种群孵化器 Population Incubator · Claw Opus</div>
+                    <div class="agent-stat"><span class="label">消息 Messages</span><span class="value" id="pred-msgs">0</span></div>
+                    <div class="agent-stat"><span class="label">候选策略 Candidates</span><span class="value" id="pred-candidates">0</span></div>
+                    <div class="agent-stat"><span class="label">状态 Status</span><span class="value" id="pred-status">空闲 Idle</span></div>
+                </div>
+                <div class="agent-card executor">
+                    <div class="agent-name">执行者 Executor</div>
+                    <div class="agent-role">链上交易执行 OnchainOS Trader · MCP + Open API</div>
+                    <div class="agent-stat"><span class="label">消息 Messages</span><span class="value" id="exec-msgs">0</span></div>
+                    <div class="agent-stat"><span class="label">交易数 Trades</span><span class="value" id="exec-trades">0</span></div>
+                    <div class="agent-stat"><span class="label">状态 Status</span><span class="value" id="exec-status">空闲 Idle</span></div>
+                </div>
+                <div class="agent-card judge">
+                    <div class="agent-name">裁判者 Judge</div>
+                    <div class="agent-role">进化裁判 Evolution Arbiter · Claw Sonnet</div>
+                    <div class="agent-stat"><span class="label">消息 Messages</span><span class="value" id="judge-msgs">0</span></div>
+                    <div class="agent-stat"><span class="label">已淘汰 Eliminated</span><span class="value" id="judge-eliminated">0</span></div>
+                    <div class="agent-stat"><span class="label">状态 Status</span><span class="value" id="judge-status">空闲 Idle</span></div>
+                </div>
+                <div class="safe-mode-alert" id="safe-mode-alert">
+                    <div class="title">安全模式 SAFE MODE</div>
+                    <div class="desc">种群适应度连续下降，资产已切换至 OKX Earn。Population health degrading → OKX Earn.</div>
+                </div>
+            </div>
+
+            <!-- Tab: OKX Ecosystem -->
+            <div class="tab-content" id="tab-okx">
+                <div class="agent-card" style="border-left-color: var(--accent-green)">
+                    <div class="agent-name">Agent Trade Kit (MCP)</div>
+                    <div class="agent-role">119 Tools · MCP Protocol · Demo Trading</div>
+                    <div class="agent-stat"><span class="label">MCP 调用 Calls</span><span class="value" id="mcp-calls">0</span></div>
+                    <div class="agent-stat"><span class="label">工具使用 Tools Used</span><span class="value" id="mcp-tools-used">0</span></div>
+                    <div class="agent-stat"><span class="label">数据来源 Source</span><span class="value" id="okx-source" style="font-size:10px">--</span></div>
+                </div>
+                <div class="agent-card" style="border-left-color: var(--accent-cyan)">
+                    <div class="agent-name">OnchainOS DEX Aggregator</div>
+                    <div class="agent-role">500+ DEX · 20+ Chains · Smart Routing</div>
+                    <div class="agent-stat"><span class="label">最优链 Best Chain</span><span class="value" id="dex-best-chain">--</span></div>
+                    <div class="agent-stat"><span class="label">Skills 已装 Installed</span><span class="value">11</span></div>
+                </div>
+                <div class="agent-card" style="border-left-color: var(--accent-yellow)">
+                    <div class="agent-name">实时行情 Live Market</div>
+                    <div class="agent-role">OKX Public API · Real-time Data</div>
+                    <div class="agent-stat"><span class="label">BTC 价格 Price</span><span class="value" id="okx-market">--</span></div>
+                    <div class="agent-stat"><span class="label">资金费率 Funding</span><span class="value" id="okx-funding">--</span></div>
+                    <div class="agent-stat"><span class="label">账户余额 Balance</span><span class="value" id="okx-balance">--</span></div>
+                    <div class="agent-stat"><span class="label">活跃仓位 Positions</span><span class="value" id="okx-positions">0</span></div>
+                    <div class="agent-stat"><span class="label">执行模式 Mode</span><span class="value" id="okx-exec-mode" style="font-size:10px">--</span></div>
+                </div>
+            </div>
+
+            <!-- Tab: About -->
+            <div class="tab-content" id="tab-about">
+                <div class="about-section">
+                    <h3 class="about-title">GeneFi 是什么？</h3>
+                    <p class="about-text">GeneFi 将每套交易策略视为生物个体，通过遗传进化算法（变异、交叉、自然选择）让策略种群自动进化，持续适应市场变化。</p>
+
+                    <h3 class="about-title">核心优势 Key Advantages</h3>
+                    <div class="advantage-grid">
+                        <div class="advantage-item">
+                            <div class="adv-icon" style="color:var(--accent-green)">&#127981;</div>
+                            <div class="adv-label">自适应 Adaptive</div>
+                            <div class="adv-desc">8种市场体制自动检测，策略参数实时进化</div>
+                        </div>
+                        <div class="advantage-item">
+                            <div class="adv-icon" style="color:var(--accent-cyan)">&#129302;</div>
+                            <div class="adv-label">多智能体 Multi-Agent</div>
+                            <div class="adv-desc">3个AI Agent通过A2A协议协作：预测→执行→裁判</div>
+                        </div>
+                        <div class="advantage-item">
+                            <div class="adv-icon" style="color:var(--accent-yellow)">&#128279;</div>
+                            <div class="adv-label">OKX 深度集成</div>
+                            <div class="adv-desc">Agent Trade Kit 119工具 + OnchainOS 500+ DEX + 11 Skills</div>
+                        </div>
+                        <div class="advantage-item">
+                            <div class="adv-icon" style="color:var(--accent-purple)">&#128202;</div>
+                            <div class="adv-label">统计验证 Validated</div>
+                            <div class="adv-desc">蒙特卡洛多体制回测 + t检验证明进化产生Alpha</div>
+                        </div>
+                        <div class="advantage-item">
+                            <div class="adv-icon" style="color:var(--accent-red)">&#128737;</div>
+                            <div class="adv-label">风控安全 Safe Mode</div>
+                            <div class="adv-desc">适应度下降自动切换OKX Earn稳健模式</div>
+                        </div>
+                        <div class="advantage-item">
+                            <div class="adv-icon" style="color:var(--accent-blue)">&#128640;</div>
+                            <div class="adv-label">一键部署 Deploy</div>
+                            <div class="adv-desc">进化最优策略一键部署到OKX Demo Trading</div>
+                        </div>
+                    </div>
+
+                    <h3 class="about-title">进化流程 Evolution Flow</h3>
+                    <div class="flow-diagram">
+                        <div class="flow-step"><span class="flow-num">1</span> 检测市场体制<br><small>Detect Regime</small></div>
+                        <div class="flow-arrow">→</div>
+                        <div class="flow-step"><span class="flow-num">2</span> 生成策略种群<br><small>Generate Population</small></div>
+                        <div class="flow-arrow">→</div>
+                        <div class="flow-step"><span class="flow-num">3</span> K线回测执行<br><small>Backtest on Candles</small></div>
+                        <div class="flow-arrow">→</div>
+                        <div class="flow-step"><span class="flow-num">4</span> 适应度评分<br><small>Fitness Scoring</small></div>
+                        <div class="flow-arrow">→</div>
+                        <div class="flow-step"><span class="flow-num">5</span> 选择+变异<br><small>Select + Mutate</small></div>
+                    </div>
+                    <p class="about-text" style="text-align:center;margin-top:8px;font-size:10px;color:var(--text-muted)">Score = 0.5×PnL + 0.3×FundingYield×50 − 0.2×MaxDrawdown</p>
+
+                    <h3 class="about-title">技术栈 Tech Stack</h3>
+                    <div class="tech-badges">
+                        <span class="tech-badge">Python FastAPI</span>
+                        <span class="tech-badge">WebSocket</span>
+                        <span class="tech-badge">SVG Force Graph</span>
+                        <span class="tech-badge">OKX MCP 119 Tools</span>
+                        <span class="tech-badge">OnchainOS 500+ DEX</span>
+                        <span class="tech-badge">11 AI Skills</span>
+                        <span class="tech-badge">Monte Carlo</span>
+                        <span class="tech-badge">Docker</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab: Config -->
+            <div class="tab-content" id="tab-config">
+                <div class="setting-row">
+                    <label>种群大小 Population Size</label>
+                    <input type="range" id="cfg-pop-size" min="5" max="80" value="20" oninput="this.nextElementSibling.textContent=this.value">
+                    <span>20</span>
+                </div>
+                <div class="setting-row">
+                    <label>变异率 Mutation Rate</label>
+                    <input type="range" id="cfg-mutation" min="1" max="50" value="15" oninput="this.nextElementSibling.textContent=(this.value/100).toFixed(2)">
+                    <span>0.15</span>
+                </div>
+                <div class="setting-row">
+                    <label>淘汰压力 Selection Pressure</label>
+                    <input type="range" id="cfg-selection" min="10" max="60" value="30" oninput="this.nextElementSibling.textContent=(this.value/100).toFixed(2)">
+                    <span>0.30</span>
+                </div>
+                <div class="setting-row">
+                    <label>进化代数 Generations</label>
+                    <input type="range" id="cfg-generations" min="5" max="100" value="15" oninput="this.nextElementSibling.textContent=this.value">
+                    <span>15</span>
+                </div>
+                <div class="setting-row">
+                    <label>执行模式 Execution Mode</label>
+                    <select id="cfg-exec-mode" class="cfg-select">
+                        <option value="simulation">Simulation 本地模拟</option>
+                        <option value="demo_api">OKX Demo Trading 模拟盘</option>
+                    </select>
+                </div>
+                <button class="btn btn-primary" onclick="applySettings()" style="width:100%;margin-top:8px">应用设置 Apply</button>
+                <button class="btn btn-secondary" onclick="runBacktest()" style="width:100%;margin-top:4px">回测对比 Backtest vs Random</button>
+                <div class="setting-row" style="margin-top:8px">
+                    <label>模拟本金 Investment Capital ($)</label>
+                    <input type="number" id="cfg-capital" value="10000" min="100" max="1000000" class="cfg-input">
+                </div>
+                <button class="btn btn-primary" onclick="runInvestmentSimulator()" style="width:100%;margin-top:4px;background:linear-gradient(135deg,var(--accent-yellow),#d97706)">&#128176; 投资模拟 Simulate</button>
+            </div>
+        </div>
+
+        <!-- ═══ Main Canvas ═══ -->
+        <div class="canvas-main">
+            <svg id="evolution-canvas"></svg>
+            <div class="node-tooltip" id="tooltip"></div>
+            <!-- Empty state overlay -->
+            <div class="canvas-empty" id="canvas-empty">
+                <div class="empty-icon">&#129516;</div>
+                <div class="empty-title">等待进化启动 Waiting for Evolution</div>
+                <div class="empty-desc">点击「启动 Start」开始策略进化<br>Click "Start" to begin strategy evolution</div>
+            </div>
+        </div>
+
+        <!-- ═══ Right Panel ═══ -->
+        <div class="panel-right">
+            <div class="panel-title">种群基因 Population DNA</div>
+
+            <div class="mini-chart">
+                <div class="title">方向分布 Direction</div>
+                <div class="distribution-bar" id="dir-dist">
+                    <div class="segment long" style="width:33%">多 Long</div>
+                    <div class="segment short" style="width:33%">空 Short</div>
+                    <div class="segment neutral" style="width:34%">中 Neutral</div>
+                </div>
+            </div>
+
+            <div class="mini-chart">
+                <div class="title">策略类型 Strategy Type</div>
+                <div class="distribution-bar" id="type-dist">
+                    <div class="segment funding_arb" style="width:25%">套利 Arb</div>
+                    <div class="segment grid" style="width:25%">网格 Grid</div>
+                    <div class="segment momentum" style="width:25%">动量 Mom</div>
+                    <div class="segment mean_reversion" style="width:25%">回归 MR</div>
+                </div>
+            </div>
+
+            <div class="mini-chart">
+                <div class="title">平均杠杆 Avg Leverage</div>
+                <div style="font-size:24px;font-weight:700;color:var(--accent-yellow)" id="avg-leverage">1.0x</div>
+            </div>
+
+            <div class="mini-chart">
+                <div class="title">平均对冲 Avg Hedge</div>
+                <div style="font-size:24px;font-weight:700;color:var(--accent-cyan)" id="avg-hedge">0%</div>
+            </div>
+
+            <div class="mini-chart">
+                <div class="title">排行榜 Leaderboard</div>
+                <div id="leaderboard"><div class="empty-hint">等待进化数据 Waiting...</div></div>
+            </div>
+
+            <div class="mini-chart">
+                <div class="title">最优基因 Best Gene</div>
+                <canvas id="gene-radar" width="260" height="180"></canvas>
+            </div>
+
+            <div class="mini-chart">
+                <div class="title">基因漂变 Gene Drift</div>
+                <canvas id="gene-drift-canvas" width="260" height="120"></canvas>
+                <div class="legend" id="drift-legend" style="margin-top:4px;font-size:9px"></div>
+            </div>
+        </div>
+
+        <!-- ═══ Bottom Panel ═══ -->
+        <div class="panel-bottom">
+            <div class="timeline-section">
+                <div class="panel-title">适应度时间线 Fitness Timeline</div>
+                <canvas id="fitness-timeline"></canvas>
+            </div>
+            <div class="log-section" id="log-section">
+                <div class="panel-title">A2A 消息日志 Message Log</div>
+                <div id="log-entries"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/js/evolution-viz.js"></script>
+    <script src="/static/js/app.js"></script>
+</body>
+</html>
